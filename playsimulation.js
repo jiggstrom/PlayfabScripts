@@ -1,6 +1,6 @@
 function runPlaySimulation(args) {
     
-    var r = new {
+    var r = {
         probabilities : {
                 win : 25,
                 winX : 25,
