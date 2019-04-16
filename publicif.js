@@ -79,6 +79,18 @@ handlers.executeTraining = function (args) {
     }
 };
 
+handlers.runPlaySimulation = function (args) {
+  if(args.seecret == "fluffo"){
+    return runPlaySimulation(args);
+  }  
+}
+
+handlers.getBalancedPlaydeck = function (args) {
+  if(args.seecret == "fluffo"){
+    return getBalancedPlaydeck(args);
+  }  
+}
+
 function getCatalogItem(itemId) {
   var catalogData = server.GetCatalogItems({CatalogVersion: null});
   for(var item in catalogData.Catalog)
