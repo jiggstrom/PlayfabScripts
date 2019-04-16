@@ -80,13 +80,13 @@ handlers.executeTraining = function (args) {
 };
 
 handlers.runPlaySimulation = function (args) {
-  if(args.seecret == "fluffo"){
+  if(args.secret == "fluffo"){
     return runPlaySimulation(args);
   }  
 }
 
 handlers.getBalancedPlaydeck = function (args) {
-  if(args.seecret == "fluffo"){
+  if(args.secret == "fluffo"){
     return getBalancedPlaydeck(args);
   }  
 }
