@@ -9,4 +9,5 @@ function getBalancedPlaydeck(args) {
             {id : "THE JOKER", yards : 10, type : 1, win : 25, winX : 25, miss : 25, missX : 25, usagesremaining : 9}
         ]
     }
+    return deck;
 }
