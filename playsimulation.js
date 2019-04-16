@@ -1,6 +1,7 @@
 function runPlaySimulation(args) {
+    
     var r = new {
-        probabilities : new {
+        probabilities : {
                 win : 25,
                 winX : 25,
                 miss : 25,
@@ -10,7 +11,7 @@ function runPlaySimulation(args) {
         result : "win",
         resultType : 0,
         yards : Math.round((Math.random() * 10) + 1),
-        outcome : new {
+        outcome : {
             type : -1,
             text : "",
             haveReturn : false
