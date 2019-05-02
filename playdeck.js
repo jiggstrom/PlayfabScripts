@@ -20,7 +20,10 @@ function getBalancedPlaydeck(args) {
                 var cardData = JSON.parse(cat.CustomData);
                 var probs = cardData.Probs.split(",");
                 var yards = cardData.AvgYds;
-                var usages = inventoryData.Inventory[item].CustomData.UsagesLeft;
+
+                var usages = 0;
+                if(inventoryData.Inventory[item].CustomData && inventoryData.Inventory[item].CustomData.UsagesLeft)
+                    usages = parseInt(inventoryData.Inventory[item].CustomData.UsagesLeft);
                 var card = {id : inventoryData.Inventory[item].ItemId, yards : yards, type : 1, win : parseInt(probs[0]), winX : parseInt(probs[1]), miss : parseInt(probs[2]), missX : parseInt(probs[3]), usagesremaining : usages}
                 deck.cards.push(card);
             }
