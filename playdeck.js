@@ -17,7 +17,7 @@ function getBalancedPlaydeck(args) {
         if(inventoryData.Inventory[item].ItemClass == "PlaybookPage") {
             if(gameDeck != [] || arrayContains(gameDeck,inventoryData.Inventory[item].ItemId)) {
                 var cat = getCatalogItem(inventoryData.Inventory[item].ItemId);
-                var cardData = JSON.parse(oc.CustomData);
+                var cardData = JSON.parse(cat.CustomData);
                 var probs = cardData.Probs.split(",");
                 var yards = cardData.AvgYds;
                 var usages = inventoryData.Inventory[item].CustomData.UsagesLeft;
