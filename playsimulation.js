@@ -1,24 +1,61 @@
 function runPlaySimulation(args) {
-    
+    var oc = getCatalogItem(args.OffensiveCard);
+    var cardData = JSON.parse(oc.CustomData);
+    var probs = cardData.Probs.split(",");
+    var probsSum = parseInt(probs[0]) + parseInt(probs[1]) + parseInt(probs[2]) + parseInt(probs[3]);
+    var resultValue = Math.round((Math.random() * probsSum) + 1);
+    var result = "missextra";
+    var resultType = 3;
+    if(rv <= probs[1]) {
+        result = "win";
+        resultType = 0;
+    }
+    else if(rv <= (probs[1] + probs[2])) {
+        result = "winextra";
+        resultType = 1;
+    }
+    else if(rv <=  (probs[1] + probs[2] + probs[3])) {
+        result = "miss";
+        resultType = 3;
+    }
+
     var r = {
         probabilities : {
-                win : 25,
-                winX : 25,
-                miss : 25,
-                missX : 25
+                win : probs[0],
+                winX : probs[1],
+                miss : probs[2],
+                missX : probs[3]
         },
-        resultValue : Math.round((Math.random() * 100) + 1),
-        result : "win",
-        resultType : 0,
-        yards : Math.round((Math.random() * 10) + 1),
-        outcome : {
-            type : -1,
-            text : "",
-            haveReturn : false
-        },
+        resultValue : resultValue,
+        result : result,
+        resultType : resultType,
+        yards : getYards(resultType, parseInt(cardData.AvgYds)),
+        outcome : getOutcome(resultType, parseInt(cardData.AvgYds)),
         returnLength : 0
     }
 
     return r;
+}
+
+function getYards(resultType, avgYds){
+    if(resultType < 3)
+        return avgYds;
+    else
+        return 0;
+}
+
+function getOutcome(resultType, avgYds){
+    if(resultType < 3)
+        return {
+            type : 1,
+            text : "",
+            haveReturn : false
+        };
+    else 
+        return {
+            type : 2,
+            text : "STOP",
+            haveReturn : false
+        };
 }
 
