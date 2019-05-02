@@ -3,7 +3,7 @@ function getBalancedPlaydeck(args) {
     var gameDeckConfig = server.GetUserData({PlayFabId: currentPlayerId, Keys: ["GameDeck"]})
     var gameDeck;
     if (gameDeckConfig.Data.hasOwnProperty("GameDeck"))
-        gameDeck = JSON.parse(gameDeckConfig.Data["GameDeck"].Value).split(",");
+        gameDeck = gameDeckConfig.Data["GameDeck"].Value.split(",");
     else
         gameDeck = []; // no config
 
