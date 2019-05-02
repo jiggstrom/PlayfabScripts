@@ -1,13 +1,40 @@
 function getBalancedPlaydeck(args) {
+
+    var gameDeckConfig = server.GetPlayerData({PlayFabId: currentPlayerId, Keys: ["GameDeck"]})
+    var gameDeck;
+    if (gameDeckConfig.Data.hasOwnProperty("GameDeck"))
+        gameDeck = JSON.parse(gameDeckConfig.Data["GameDeck"].Value).split(",");
+    else
+        gameDeck = []; // no config
+
     var deck = {
-        cards : [
-            {id : "THE SHOOTER", yards : 10, type : 1, win : 25, winX : 25, miss : 25, missX : 25, usagesremaining : 12},
-            {id : "FIREBALL", yards : 10, type : 1, win : 25, winX : 25, miss : 25, missX : 25, usagesremaining : 2.5},
-            {id : "LONGHAUL", yards : 10, type : 1, win : 25, winX : 25, miss : 25, missX : 25, usagesremaining : 20},
-            {id : "SCREEN RUN", yards : 10, type : 1, win : 25, winX : 25, miss : 25, missX : 25, usagesremaining : 12},
-            {id : "HAIL MARY", yards : 10, type : 1, win : 25, winX : 25, miss : 25, missX : 25, usagesremaining : 43},
-            {id : "THE JOKER", yards : 10, type : 1, win : 25, winX : 25, miss : 25, missX : 25, usagesremaining : 9}
-        ]
+        cards : []
     }
+
+    var	inventoryData = server.GetUserInventory({PlayFabId: currentPlayerId});
+    for(var item in inventoryData.Inventory)
+    {    
+        if(inventoryData.Inventory[item].ItemClass == "PlaybookPage") {
+            if(gameDeck != [] || arrayContains(gameDeck,inventoryData.Inventory[item].ItemId)) {
+                var cat = getCatalogItem(inventoryData.Inventory[item].ItemId);
+                var cardData = JSON.parse(oc.CustomData);
+                var probs = cardData.Probs.split(",");
+                var yards = cardData.AvgYds;
+                var usages = inventoryData.Inventory[item].CustomData.UsagesLeft;
+                var card = {id : inventoryData.Inventory[item].ItemId, yards : yards, type : 1, win : parseInt(probs[0]), winX : parseInt(probs[1]), miss : parseInt(probs[2]), missX : parseInt(probs[3]), usagesremaining : usages}
+                deck.cards.push(card);
+            }
+        }
+
+    }
+    
     return deck;
+}
+
+function arrayContains(array, string){
+    for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        if(element === string) return true;        
+    }
+    return false;
 }

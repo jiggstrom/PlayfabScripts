@@ -16,7 +16,7 @@ function runPlaySimulation(args) {
     }
     else if(resultValue <=  ( parseInt(probs[0]) +  parseInt(probs[1]) +  parseInt(probs[2]))) {
         result = "miss";
-        resultType = 3;
+        resultType = 2;
     }
 
     var r = {
