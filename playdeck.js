@@ -1,6 +1,6 @@
 function getBalancedPlaydeck(args) {
 
-    var gameDeckConfig = server.GetPlayerData({PlayFabId: currentPlayerId, Keys: ["GameDeck"]})
+    var gameDeckConfig = server.GetPlayerTitleData({PlayFabId: currentPlayerId, Keys: ["GameDeck"]})
     var gameDeck;
     if (gameDeckConfig.Data.hasOwnProperty("GameDeck"))
         gameDeck = JSON.parse(gameDeckConfig.Data["GameDeck"].Value).split(",");
@@ -27,7 +27,7 @@ function getBalancedPlaydeck(args) {
         }
 
     }
-    
+
     return deck;
 }
 
