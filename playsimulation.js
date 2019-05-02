@@ -6,15 +6,15 @@ function runPlaySimulation(args) {
     var resultValue = Math.round((Math.random() * probsSum) + 1);
     var result = "missextra";
     var resultType = 3;
-    if(resultValue <= probs[1]) {
+    if(resultValue <=  parseInt(probs[0])) {
         result = "win";
         resultType = 0;
     }
-    else if(resultValue <= (probs[1] + probs[2])) {
+    else if(resultValue <= ( parseInt(probs[0]) +  parseInt(probs[1]))) {
         result = "winextra";
         resultType = 1;
     }
-    else if(resultValue <=  (probs[1] + probs[2] + probs[3])) {
+    else if(resultValue <=  ( parseInt(probs[0]) +  parseInt(probs[1]) +  parseInt(probs[2]))) {
         result = "miss";
         resultType = 3;
     }
