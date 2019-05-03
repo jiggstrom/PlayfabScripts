@@ -75,24 +75,26 @@ function mergePlaybook(){
                 }
                 log.debug("Dupe " + item.ItemId + " has " + usages + " usages.");
                 if(mv.CustomData && mv.CustomData.UsagesLeft) {
+                    log.debug("Custom data exists.");
                     mv.CustomData.UsagesLeft += usages;
                 }
                 else {
+                    log.debug("Custom doesnt exist.");
                     mv.CustomData = {UsagesLeft: usages};
-                
-                    var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
+                }
+                log.debug("Tot usage is now " + mv.CustomData.UsagesLeft);
+                var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
                     PlayFabId: currentPlayerId,
                     ItemInstanceId: mv.ItemInstanceId,
                     Data: {
-                        UsagesLeft: usages
-                        }
-                    });
-                    var updateUserDataResult = server.ConsumeItem({
-                        PlayFabId: currentPlayerId,
-                        ItemInstanceId: item.ItemInstanceId,
-                        ConsumeCount: 1
-                    });
-                }
+                        UsagesLeft: mv.CustomData.UsagesLeft
+                    }
+                });
+                var updateUserDataResult = server.ConsumeItem({
+                    PlayFabId: currentPlayerId,
+                    ItemInstanceId: item.ItemInstanceId,
+                    ConsumeCount: 1
+                });
             }
             else {
                 foundItems.push({key: item.ItemId, value: item});
