@@ -93,7 +93,7 @@ function mergePlaybook(){
             }
             else {
                 foundItems.push({key: item.ItemId, value: item});
-                if(!(item.CustomData && item.CustomData.UsagesLeft) {
+                if(!(item.CustomData && item.CustomData.UsagesLeft)) {
                     var cat = getCatalogItem(item.ItemId);
                     var cardData = JSON.parse(cat.CustomData);
                     if(cardData.Usages) {
