@@ -69,15 +69,16 @@ function mergePlaybook(){
                     var cat = getCatalogItem(item.ItemId);
                     var cardData = JSON.parse(cat.CustomData);
                     if(cardData.Usages) {
-                        usages = parseInt(cardData.Usages);                  
+                        usages = parseInt(cardData.Usages);  
+                    }                
                 }
 
                 if(mv.CustomData && mv.CustomData.UsagesLeft)
                     mv.CustomData.UsagesLeft += usages;
                 else
                     mv.CustomData.UsagesLeft = usages;
-                }
-                var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
+                
+                    var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
                     PlayFabId: currentPlayerId,
                     ItemInstanceId: mv.ItemInstanceId,
                     Data: {

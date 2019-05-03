@@ -91,6 +91,10 @@ handlers.getBalancedPlaydeck = function (args) {
   }  
 }
 
+handlers.mergePlaybook = function (args) {
+    return mergePlaybook(args);
+}
+
 function getCatalogItem(itemId) {
   var catalogData = server.GetCatalogItems({CatalogVersion: null});
   for(var item in catalogData.Catalog)
