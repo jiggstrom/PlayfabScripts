@@ -74,9 +74,10 @@ function mergePlaybook(){
                     }                
                 }
                 log.debug("Dupe " + item.ItemId + " has " + usages + " usages.");
-                if(mv.CustomData && mv.CustomData.UsagesLeft)
+                if(mv.CustomData && mv.CustomData.UsagesLeft) {
                     mv.CustomData.UsagesLeft += usages;
-                else
+                }
+                else {
                     mv.CustomData = {UsagesLeft: usages};
                 
                     var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
@@ -84,13 +85,14 @@ function mergePlaybook(){
                     ItemInstanceId: mv.ItemInstanceId,
                     Data: {
                         UsagesLeft: usages
-                    }
-                });
-                var updateUserDataResult = server.ConsumeItem({
-                    PlayFabId: currentPlayerId,
-                    ItemInstanceId: item.ItemInstanceId,
-                    ConsumeCount: 1
-                });
+                        }
+                    });
+                    var updateUserDataResult = server.ConsumeItem({
+                        PlayFabId: currentPlayerId,
+                        ItemInstanceId: item.ItemInstanceId,
+                        ConsumeCount: 1
+                    });
+                }
             }
             else {
                 foundItems.push({key: item.ItemId, value: item});
