@@ -43,12 +43,13 @@ function arrayContains(array, string){
 }
 
 function dictGetValue(array, key){
-    if(array == undefiuned || array == []) return undefined;
+    if(array == undefined || array == []) return undefined;
 
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
         if(element.key === string) return element.value;        
     }
+    log.debug("key '" + key + "' not found in dictionary");
     return undefined;
 }
 
@@ -72,7 +73,7 @@ function mergePlaybook(){
                         usages = parseInt(cardData.Usages);  
                     }                
                 }
-
+                log.debug("Dupe " + item.ItemId + " has " + usages + " usages.");
                 if(mv.CustomData && mv.CustomData.UsagesLeft)
                     mv.CustomData.UsagesLeft += usages;
                 else
@@ -94,9 +95,11 @@ function mergePlaybook(){
             else {
                 foundItems.push({key: item.ItemId, value: item});
                 if(!(item.CustomData && item.CustomData.UsagesLeft)) {
+                    log.debug(item.ItemId + " had no custom usages.");
                     var cat = getCatalogItem(item.ItemId);
                     var cardData = JSON.parse(cat.CustomData);
                     if(cardData.Usages) {
+                        log.debug(item.ItemId + " updating to " + cardData.Usages);
                         var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
                             PlayFabId: currentPlayerId,
                             ItemInstanceId: item.ItemInstanceId,
