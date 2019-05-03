@@ -61,7 +61,7 @@ function mergePlaybook(){
         var item = inventoryData.Inventory[x];
         if(item.ItemClass == "PlaybookPage") {
             var mv = dictGetValue(foundItems,item.ItemId)
-            if(mw != undefined) {
+            if(mv != undefined) {
                 var usages = 0;
                 if(item.CustomData && item.CustomData.UsagesLeft) {
                     var usages = parseInt(item.CustomData.UsagesLeft);
