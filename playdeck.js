@@ -83,7 +83,7 @@ function mergePlaybook(){
                     PlayFabId: currentPlayerId,
                     ItemInstanceId: mv.ItemInstanceId,
                     Data: {
-                        UsagesLeft: mv.CustomData.UsagesLeft
+                        UsagesLeft: usages
                     }
                 });
                 var updateUserDataResult = server.ConsumeItem({
