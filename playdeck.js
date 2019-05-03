@@ -47,7 +47,7 @@ function dictGetValue(array, key){
 
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
-        if(element.key === string) return element.value;        
+        if(element.key === key) return element.value;        
     }
     log.debug("key '" + key + "' not found in dictionary");
     return undefined;
