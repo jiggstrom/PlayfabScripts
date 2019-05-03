@@ -76,7 +76,7 @@ function mergePlaybook(){
                 log.debug("Dupe " + item.ItemId + " has " + usages + " usages.");
                 if(mv.CustomData && mv.CustomData.UsagesLeft) {
                     log.debug("Custom data exists.");
-                    mv.CustomData.UsagesLeft += parseInt(usages);
+                    mv.CustomData.UsagesLeft = (parseInt(mv.CustomData.UsagesLeft) + parseInt(usages));
                 }
                 else {
                     log.debug("Custom doesnt exist.");
