@@ -90,6 +90,8 @@ function mergePlaybook(){
                         UsagesLeft: parseInt(mv.CustomData.UsagesLeft)
                     }
                 });
+                log.debug("currentPlayerId is " + currentPlayerId);
+                log.debug("item.ItemInstanceId " + item.ItemInstanceId);
                 var updateUserDataResult = server.ConsumeItem({
                     PlayFabId: currentPlayerId,
                     ItemInstanceId: item.ItemInstanceId,
