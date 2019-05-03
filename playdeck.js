@@ -77,7 +77,7 @@ function mergePlaybook(){
                 if(mv.CustomData && mv.CustomData.UsagesLeft)
                     mv.CustomData.UsagesLeft += usages;
                 else
-                    mv.CustomData.UsagesLeft = usages;
+                    mv.CustomData = {UsagesLeft: usages};
                 
                     var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
                     PlayFabId: currentPlayerId,
