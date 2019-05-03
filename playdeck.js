@@ -41,3 +41,72 @@ function arrayContains(array, string){
     }
     return false;
 }
+
+function dictGetValue(array, key){
+    if(array == undefiuned || array == []) return undefined;
+
+    for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        if(element.key === string) return element.value;        
+    }
+    return undefined;
+}
+
+function mergePlaybook(){
+    var	inventoryData = server.GetUserInventory({PlayFabId: currentPlayerId});
+    var foundItems = [];
+    for(var x in inventoryData.Inventory)    
+    {    
+        var item = inventoryData.Inventory[x];
+        if(item.ItemClass == "PlaybookPage") {
+            var mv = dictGetValue(foundItems,item.ItemId)
+            if(mw != undefined) {
+                var usages = 0;
+                if(item.CustomData && item.CustomData.UsagesLeft) {
+                    var usages = parseInt(item.CustomData.UsagesLeft);
+                }
+                else {
+                    var cat = getCatalogItem(item.ItemId);
+                    var cardData = JSON.parse(cat.CustomData);
+                    if(cardData.Usages) {
+                        usages = parseInt(cardData.Usages);                  
+                }
+
+                if(mv.CustomData && mv.CustomData.UsagesLeft)
+                    mv.CustomData.UsagesLeft += usages;
+                else
+                    mv.CustomData.UsagesLeft = usages;
+                }
+                var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
+                    PlayFabId: currentPlayerId,
+                    ItemInstanceId: mv.ItemInstanceId,
+                    Data: {
+                        UsagesLeft: mv.CustomData.UsagesLeft
+                    }
+                });
+                var updateUserDataResult = server.ConsumeItem({
+                    PlayFabId: currentPlayerId,
+                    ItemInstanceId: item.ItemInstanceId,
+                    ConsumeCount: 1
+                });
+            }
+            else {
+                foundItems.push({key: item.ItemId, value: item});
+                if(!(item.CustomData && item.CustomData.UsagesLeft) {
+                    var cat = getCatalogItem(item.ItemId);
+                    var cardData = JSON.parse(cat.CustomData);
+                    if(cardData.Usages) {
+                        var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
+                            PlayFabId: currentPlayerId,
+                            ItemInstanceId: item.ItemInstanceId,
+                            Data: {
+                                UsagesLeft: parseInt(cardData.Usages)
+                            }
+                        });
+                    }
+                }
+            }
+        }
+
+    }
+}
