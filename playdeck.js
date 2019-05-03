@@ -114,6 +114,7 @@ function mergePlaybook(){
                             }
                         });
                     }
+                    item.CustomData = {UsagesLeft: parseInt(cardData.Usages)};
                 }
             }
         }
