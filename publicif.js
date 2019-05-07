@@ -113,6 +113,16 @@ function getInventoryItemInstance(itemInstanceId, doRefresh) {
   }
 }
 
+function getInventoryItemInstanceFromItemId(itemId) {
+  var inventoryData = server.GetUserInventory({PlayFabId: currentPlayerId});
+
+  for(var item in inventoryData.Inventory)
+  {
+    log.debug("found " + inventoryData.Inventory[item].ItemId);
+    if(inventoryData.Inventory[item].ItemId == itemId) return inventoryData.Inventory[item];
+  }
+}
+
 function getVCBalance(vc)
 {
   	var	inventoryData = server.GetUserInventory({PlayFabId: currentPlayerId});
