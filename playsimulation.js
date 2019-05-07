@@ -47,7 +47,7 @@ function decrementUsageIfPossible(CardItemId) {
     if(x != undefined) {
         if(x.CustomData && x.CustomData.UsagesLeft) {
             log.debug("Custom data exists.");
-            var curUsages = parseInt(mv.CustomData.UsagesLeft);
+            var curUsages = parseInt(x.CustomData.UsagesLeft);
             if(curUsages > 0){
                 curUsages--;
                 log.debug("Tot usage is now " + curUsages);
