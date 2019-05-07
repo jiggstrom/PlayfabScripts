@@ -42,10 +42,10 @@ function runPlaySimulation(args) {
     }
 }
 
-function decrementUsageIfPossible(CardItemId) {
-    if(CardItemId == "PLAYBOOK_BASICRUN") return true;
+function decrementUsageIfPossible(CardItemId) {    
     var x = getInventoryItemInstanceFromItemId(CardItemId);
     if(x != undefined) {
+        if(x.ItemClass == "PlaybookBasicPage") return true;
         if(x.CustomData && x.CustomData.UsagesLeft) {
             log.debug("Custom data exists.");
             var curUsages = parseInt(x.CustomData.UsagesLeft);

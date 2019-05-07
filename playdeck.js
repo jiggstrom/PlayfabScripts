@@ -59,7 +59,7 @@ function mergePlaybook(){
     for(var x in inventoryData.Inventory)    
     {    
         var item = inventoryData.Inventory[x];
-        if(item.ItemClass == "PlaybookPage") {
+        if(item.ItemClass == "PlaybookPage" || "PlaybookBasicPage") {
             var mv = dictGetValue(foundItems,item.ItemId)
             if(mv != undefined) {
                 var usages = 0;
