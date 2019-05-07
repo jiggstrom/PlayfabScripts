@@ -14,7 +14,7 @@ function getBalancedPlaydeck(args) {
     var	inventoryData = server.GetUserInventory({PlayFabId: currentPlayerId});
     for(var item in inventoryData.Inventory)
     {    
-        if(inventoryData.Inventory[item].ItemClass == "PlaybookPage") {
+        if(inventoryData.Inventory[item].ItemClass == "PlaybookPage" || inventoryData.Inventory[item].ItemClass == "PlaybookBasicPage") {
             if(gameDeck != [] || arrayContains(gameDeck,inventoryData.Inventory[item].ItemId)) {
                 var cat = getCatalogItem(inventoryData.Inventory[item].ItemId);
                 var cardData = JSON.parse(cat.CustomData);
@@ -22,7 +22,7 @@ function getBalancedPlaydeck(args) {
                 var yards = cardData.AvgYds;
 
                 var usages = 0;
-                if(inventoryData.Inventory[item].CustomData && inventoryData.Inventory[item].CustomData.UsagesLeft)
+                if(inventoryData.Inventory[item].CustomData && inventoryData.Inventory[item].CustomData.UsagesLeft != undefined)
                     usages = parseInt(inventoryData.Inventory[item].CustomData.UsagesLeft);
                 var card = {id : inventoryData.Inventory[item].ItemId, yards : yards, type : 1, win : parseInt(probs[0]), winX : parseInt(probs[1]), miss : parseInt(probs[2]), missX : parseInt(probs[3]), usagesremaining : usages}
                 deck.cards.push(card);
@@ -63,18 +63,18 @@ function mergePlaybook(){
             var mv = dictGetValue(foundItems,item.ItemId)
             if(mv != undefined) {
                 var usages = 0;
-                if(item.CustomData && item.CustomData.UsagesLeft) {
+                if(item.CustomData && item.CustomData.UsagesLeft != undefined) {
                     var usages = parseInt(item.CustomData.UsagesLeft);
                 }
                 else {
                     var cat = getCatalogItem(item.ItemId);
                     var cardData = JSON.parse(cat.CustomData);
-                    if(cardData.Usages) {
+                    if(cardData.Usages != undefined) {
                         usages = parseInt(cardData.Usages);  
                     }                
                 }
                 log.debug("Dupe " + item.ItemId + " has " + usages + " usages.");
-                if(mv.CustomData && mv.CustomData.UsagesLeft) {
+                if(mv.CustomData && mv.CustomData.UsagesLeft != undefined) {
                     log.debug("Custom data exists.");
                     mv.CustomData.UsagesLeft = (parseInt(mv.CustomData.UsagesLeft) + parseInt(usages));
                 }
@@ -100,11 +100,11 @@ function mergePlaybook(){
             }
             else {
                 foundItems.push({key: item.ItemId, value: item});
-                if(!(item.CustomData && item.CustomData.UsagesLeft)) {
+                if(!(item.CustomData && item.CustomData.UsagesLeft != undefined)) {
                     log.debug(item.ItemId + " had no custom usages.");
                     var cat = getCatalogItem(item.ItemId);
                     var cardData = JSON.parse(cat.CustomData);
-                    if(cardData.Usages) {
+                    if(cardData.Usages != undefined) {
                         log.debug(item.ItemId + " updating to " + cardData.Usages);
                         var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
                             PlayFabId: currentPlayerId,
