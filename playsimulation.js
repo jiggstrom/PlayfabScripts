@@ -43,6 +43,7 @@ function runPlaySimulation(args) {
 }
 
 function decrementUsageIfPossible(CardItemId) {
+    if(CardItemId == "PLAYBOOK_BASICRUN") return true;
     var x = getInventoryItemInstanceFromItemId(CardItemId);
     if(x != undefined) {
         if(x.CustomData && x.CustomData.UsagesLeft) {
