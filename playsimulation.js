@@ -84,7 +84,7 @@ function getOutcome(resultType, avgYds){
     if(resultType == 0) {  //WinX
         var p = gamEngineParams.winextra;
         var rand1 = Math.random();
-        var yds =  (p.max-avgYds-fixedextra)*Math.pow(rand1,p.slope)+avgYds+p.fixedextra;
+        var yds =  (p.max-avgYds-p.fixedextra)*Math.pow(rand1,p.slope)+avgYds+p.fixedextra;
         return {
             yds:yds,
             outcome: {
