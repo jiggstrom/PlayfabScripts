@@ -79,7 +79,7 @@ function getOutcome(resultType, avgYds){
         Keys: ["GameEngineParams"]        
     });
 
-    var gamEngineParams = data.Data["GameEngineParams"]
+    var gamEngineParams = JSON.parse(data.Data["GameEngineParams"]);
 
     if(resultType == 0) {  //WinX
         var p = gamEngineParams.winextra;
