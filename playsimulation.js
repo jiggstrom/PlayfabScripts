@@ -107,7 +107,7 @@ function getOutcome(resultType, avgYds){
             }
         };
     }
-    if(resultType == 2) {  //Miss
+    if(resultType >= 2) {  //Miss
         var p = gamEngineParams.miss;
         var rand1 = Math.random();
         var rand2 = Math.random();
@@ -134,6 +134,7 @@ function getOutcome(resultType, avgYds){
             };
         }
     }
+    //Overridden by miss f.n
     if(resultType == 3) {  //MissX
         var p = gamEngineParams.missextra;
         var rand1 = Math.random();
