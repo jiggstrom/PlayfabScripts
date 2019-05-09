@@ -19,7 +19,8 @@ function runPlaySimulation(args) {
             result = "miss";
             resultType = 2;
         }
-
+        var res = getOutcome(resultType, parseInt(cardData.AvgYds));
+        
         var r = {
             probabilities : {
                     win : probs[0],
@@ -30,8 +31,8 @@ function runPlaySimulation(args) {
             resultValue : resultValue,
             result : result,
             resultType : resultType,
-            yards : getYards(resultType, parseInt(cardData.AvgYds)),
-            outcome : getOutcome(resultType, parseInt(cardData.AvgYds)),
+            yards : res.yds,
+            outcome : res.outcome,
             returnLength : 0
         }
 
@@ -74,17 +75,94 @@ function getYards(resultType, avgYds){
 }
 
 function getOutcome(resultType, avgYds){
-    if(resultType < 3)
+    var data = server.GetTitleInternalData({
+        Keys: ["GameEngineParams"]        
+    });
+
+    var gamEngineParams = data.Data["GameEngineParams"]
+
+    if(resultType == 0) {  //WinX
+        var p = gamEngineParams.winextra;
+        var rand1 = Math.random();
+        var yds =  (p.max-avgYds-fixedextra)*Math.pow(rand1,p.slope)+avgYds+p.fixedextra;
         return {
-            type : 1,
-            text : "",
-            haveReturn : false
+            yds:yds,
+            outcome: {
+                type : 1,
+                text : "",
+                haveReturn : false
+            }
         };
-    else 
+    }
+    if(resultType == 1) {  //Win
+        var p = gamEngineParams.win;
+        var rand1 = Math.random();
+        var yds = avgYds + rand1 * ((p.in*Math.pow(p.decrease,avgYds))*avgYds)-(((p.in*Math.pow(p.decrease, avgYds))*avgYds)*p.offset)
         return {
-            type : 2,
-            text : "STOP",
-            haveReturn : false
+            yds:yds,
+            outcome: {
+                type : 1,
+                text : "",
+                haveReturn : false
+            }
         };
+    }
+    if(resultType == 2) {  //Miss
+        var p = gamEngineParams.miss;
+        var rand1 = Math.random();
+        var rand2 = Math.random();
+
+        if(rand1>=(1*p.stop)){ //Stop
+            return {
+                yds:0,
+                outcome: {
+                    type : 2,
+                    text : "STOP",
+                    haveReturn : false
+                }
+            };
+        }
+        else { //loss
+            var yds = -((p.maxloss-1)*Math.pow(rand2,p.slope)+1);
+            return {
+                yds:yds,
+                outcome: {
+                    type : 0,
+                    text : "",
+                    haveReturn : false
+                }
+            };
+        }
+    }
+    if(resultType == 3) {  //MissX
+        var p = gamEngineParams.missextra;
+        var rand1 = Math.random();
+        var rand2 = Math.random();
+
+        if(rand1>=(1*p.turnover)){ //turnover
+            return {
+                yds:0,
+                outcome: {
+                    type : 3,
+                    text : "TURNOVER",
+                    haveReturn : false
+                }
+            };
+        }
+        else { //loss
+            var yds = -((p.maxloss-p.minloss)*Math.pow(rand2,p.slope)+p.minloss);
+            return {
+                yds:yds,
+                outcome: {
+                    type : 0,
+                    text : "",
+                    haveReturn : false
+                }
+            };
+        }
+
+    }
+
+    return {};
 }
 
