@@ -220,13 +220,16 @@ function reduceCurrencyIfPossible (args) {
 
 function storeMatchResult(args) 
 {
-  if(args.ponts1 >= args.points2 && args.playernum == 1){
+  if(args.ponts1 > args.points2){
     grantMatchRewardWin();
+    updateStats(args.stats,1);
   }
   else {
-    grantMatchRewardWin();
+    grantMatchReward();
+    updateStats(args.stats,0);
   }
 
+  
 }
 
 function grantMatchRewardWin(){
@@ -238,6 +241,29 @@ function grantMatchRewardWin(){
   log.debug(server.GrantItemsToUser(grantItemsToUserRequest));      
 
 }
+
 function grantMatchReward(){
-  
+  var grantItemsToUserRequest = {
+    PlayFabId: currentPlayerId,
+    ItemIds: ["LOSS_BUNDLE"]
+  };
+    
+  log.debug(server.GrantItemsToUser(grantItemsToUserRequest)); 
+}
+
+function updateStats(stats, won)
+{
+  var updatePlayerStatisticsRequest = {
+    PlayFabId: currentPlayerId,
+    Statistics: [
+      {"Touchdowns": stats.Touchdowns},
+      {"Fieldgoals": stats.Fieldgoals},
+      {"YdsFwd": stats.YdsFwd},
+      {"YdsTot": stats.YdsTot},
+      {"WonGames": won},
+      {"PlayedGames": 1}
+    ]
+  };
+    
+  log.debug(server.UpdatePlayerStatistics(updatePlayerStatisticsRequest));
 }
