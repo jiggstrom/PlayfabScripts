@@ -95,6 +95,12 @@ handlers.mergePlaybook = function (args) {
     return mergePlaybook(args);
 }
 
+handlers.storeMatchResult = function (args) {
+  if(args.secret == "fluffo"){
+    return storeMatchResult(args);
+  }
+}
+
 function getCatalogItem(itemId) {
   var catalogData = server.GetCatalogItems({CatalogVersion: null});
   for(var item in catalogData.Catalog)
@@ -210,4 +216,28 @@ function reduceCurrencyIfPossible (args) {
     {
       return false;
     }
-};
+}
+
+function storeMatchResult(args) 
+{
+  if(args.ponts1 >= args.points2 && args.playernum == 1){
+    grantMatchRewardWin();
+  }
+  else {
+    grantMatchRewardWin();
+  }
+
+}
+
+function grantMatchRewardWin(){
+  var grantItemsToUserRequest = {
+    PlayFabId: currentPlayerId,
+    ItemIds: ["WIN"]
+  };
+    
+  log.debug(server.GrantItemsToUser(grantItemsToUserRequest));      
+
+}
+function grantMatchReward(){
+  
+}
