@@ -220,7 +220,7 @@ function reduceCurrencyIfPossible (args) {
 
 function storeMatchResult(args) 
 {
-  if(args.ponts1 > args.points2){
+  if(args.points1 > args.points2){
     grantMatchRewardWin();
     updateStats(args.stats,1);
   }
@@ -253,6 +253,7 @@ function grantMatchReward(){
 
 function updateStats(stats, won)
 {
+  log.debug(stats);
   var updatePlayerStatisticsRequest = {
     PlayFabId: currentPlayerId,
     Statistics: [
