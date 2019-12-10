@@ -256,12 +256,12 @@ function updateStats(stats, won)
   var updatePlayerStatisticsRequest = {
     PlayFabId: currentPlayerId,
     Statistics: [
-      {"Touchdowns": stats.Touchdowns},
-      {"Fieldgoals": stats.Fieldgoals},
-      {"YdsFwd": stats.YdsFwd},
-      {"YdsTot": stats.YdsTot},
-      {"WonGames": won},
-      {"PlayedGames": 1}
+      {"StatisticName":"Touchdowns", "Value": stats.Touchdowns},
+      {"StatisticName":"Fieldgoals", "Value": stats.Fieldgoals},
+      {"StatisticName":"YdsFwd", "Value": stats.YdsFwd},
+      {"StatisticName":"YdsTot", "Value": stats.YdsTot},
+      {"StatisticName":"WonGames", "Value": won},
+      {"StatisticName":"PlayedGames", "Value": 1}
     ]
   };
     
