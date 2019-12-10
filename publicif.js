@@ -232,7 +232,7 @@ function storeMatchResult(args)
 function grantMatchRewardWin(){
   var grantItemsToUserRequest = {
     PlayFabId: currentPlayerId,
-    ItemIds: ["WIN"]
+    ItemIds: ["WIN_BUNDLE"]
   };
     
   log.debug(server.GrantItemsToUser(grantItemsToUserRequest));      
