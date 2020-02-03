@@ -294,9 +294,11 @@ function addToActiveMissions(matchData){
                 if(prop == stat.Name) {
                   if(item.CustomData[prop] != null) {
                     item.customData[prop] += parseInt(element)
+                    bItemUpdated = true;
                   }
                   else {
                     item.customData[prop] = parseInt(element)
+                    bItemUpdated = true;
                   }
                 }             
               }
