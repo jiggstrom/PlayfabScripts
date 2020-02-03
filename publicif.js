@@ -326,9 +326,5 @@ function addToActiveMissions(matchData){
 
 function getInventoryItemInstancesFromItemClass(ItemClass) {
   var inventoryData = server.GetUserInventory({PlayFabId: currentPlayerId});
-
-  for(var item in inventoryData.Inventory)
-  {
-    if(inventoryData.Inventory[item].ItemClass == ItemClass) return inventoryData.Inventory[item];
-  }
+  return inventoryData.Inventory.filter(x => x.ItemClass == ItemClass)
 }
