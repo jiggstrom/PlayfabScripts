@@ -305,11 +305,11 @@ function addToActiveMissions(matchData){
                   }
 
                   if(item.CustomData.hasOwnProperty(prop)) {
-                    parseInt(item.CustomData[prop]) += parseInt(element)
+                    item.CustomData[prop] = parseInt(item.CustomData[prop]) + parseInt(element);
                     bItemUpdated = true;
                   }
                   else {
-                    item.CustomData[prop] = parseInt(element)
+                    item.CustomData[prop] = parseInt(element);
                     bItemUpdated = true;
                   }
                 }             
