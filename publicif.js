@@ -300,12 +300,12 @@ function addToActiveMissions(matchData){
                 const element = matchData.stats[prop];
                 if(prop == stat.Name) {
                   log.debug("found " + prop + " with a value of " + element);
-                  if(item.CustomData[prop] != null) {
-                    item.customData[prop] += parseInt(element)
+                  if(item.CustomData.hasOwnProperty(prop)) {
+                    item.CustomData[prop] += parseInt(element)
                     bItemUpdated = true;
                   }
                   else {
-                    item.customData[prop] = parseInt(element)
+                    item.CustomData[prop] = parseInt(element)
                     bItemUpdated = true;
                   }
                 }             
@@ -319,7 +319,7 @@ function addToActiveMissions(matchData){
           var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
               PlayFabId: currentPlayerId,
               ItemInstanceId: item.ItemInstanceId,
-              Data: item.customData
+              Data: item.CustomData
           });
         }      
       }
