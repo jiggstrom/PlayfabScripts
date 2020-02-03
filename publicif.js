@@ -222,13 +222,13 @@ function storeMatchResult(args)
 {
   if(args.points1 > args.points2){
     grantMatchRewardWin();
-    updateStats(args.stats,1);
+    updateStats(args.stats,1);    
   }
   else {
     grantMatchReward();
     updateStats(args.stats,0);
   }
-
+  addToActiveMissions(args);
   
 }
 
@@ -265,6 +265,57 @@ function updateStats(stats, won)
       {"StatisticName":"PlayedGames", "Value": 1}
     ]
   };
-    
+
   log.debug(server.UpdatePlayerStatistics(updatePlayerStatisticsRequest));
+}
+
+function addToActiveMissions(matchData){
+  var catalogitems = [];
+
+  getInventoryItemInstancesFromItemClass("RewardMission").forEach(item => {
+    var catItm = catalogitems.find(x=> x.ItemId ==  item.ItemId);
+    if(catItm == null){
+      catItm = getCatalogItem(item.ItemId);
+      catalogitems.push(catItm);
+    }
+    if(catItm != null){
+      var catCustData = JSON.parse(catItm.CustomData)
+      var stats = catCustData.Stats || {};
+      var bItemUpdated = false;
+      stats.forEach(stat => {
+        if(stat.Type == "Stat") {
+          for (const prop in matchData.Statistics) {
+            if (object.hasOwnProperty(prop)) {
+              const element = object[prop];
+              if(prop == stat.Name) {
+                if(item.CustomData[prop] != null) {
+                  item.customData[prop] += parseInt(element)
+                }
+                else {
+                  item.customData[prop] = parseInt(element)
+                }
+              }             
+            }
+          }
+        }
+      });
+      if(bItemUpdated) {
+        var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
+            PlayFabId: currentPlayerId,
+            ItemInstanceId: Item.ItemInstanceId,
+            Data: item.customData
+        });
+      }      
+    }
+  });
+}
+
+function getInventoryItemInstancesFromItemClass(ItemClass) {
+  var inventoryData = server.GetUserInventory({PlayFabId: currentPlayerId});
+
+  for(var item in inventoryData.Inventory)
+  {
+    log.debug("found " + inventoryData.Inventory[item].ItemId);
+    if(inventoryData.Inventory[item].ItemClass == ItemClass) return inventoryData.Inventory[item];
+  }
 }
