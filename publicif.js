@@ -274,7 +274,8 @@ function addToActiveMissions(matchData){
 
   var rewardItemsInInventory = getInventoryItemInstancesFromItemClass("RewardMission");
 
-  if(rewardItemsInInventory != undefined) for(item in rewardItemsInInventory) {
+  if(rewardItemsInInventory != undefined) for(ix in rewardItemsInInventory) {
+    var item = rewardItemsInInventory[ix];
     if(item != undefined) {
       log.debug("found item of type " + item.ItemId + " in inventory");
       log.debug(item);
@@ -289,7 +290,8 @@ function addToActiveMissions(matchData){
         var catCustData = JSON.parse(catItm.CustomData)
         var stats = catCustData.Stats || {};
         var bItemUpdated = false;
-        for(stat in stats){
+        for(statIx in stats){
+          var stat = stats[0];
           log.debug("found stat item of type " + stat.Type + " on catalog item");
           if(stat.Type == "Stat") {
             for (const prop in matchData.Statistics) {
