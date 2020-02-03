@@ -300,6 +300,10 @@ function addToActiveMissions(matchData){
                 const element = matchData.stats[prop];
                 if(prop == stat.Name) {
                   log.debug("found " + prop + " with a value of " + element);
+                  if(item.CustomData == undefined){
+                    item.CustomData = {};
+                  }
+
                   if(item.CustomData.hasOwnProperty(prop)) {
                     item.CustomData[prop] += parseInt(element)
                     bItemUpdated = true;
