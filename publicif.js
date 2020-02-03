@@ -277,11 +277,12 @@ function addToActiveMissions(matchData){
   if(rewardItemsInInventory != undefined) for(item in rewardItemsInInventory) {
     if(item != undefined) {
       var catItm = catalogitems.find(x=> x.ItemId ==  item.ItemId);
-      if(catItm == null){
+      if(catItm == undefined){
         catItm = getCatalogItem(item.ItemId);
-        catalogitems.push(catItm);
+        if(cetItm != undefined)
+          catalogitems.push(catItm);
       }
-      if(catItm != null){
+      if(catItm != undefined){
         var catCustData = JSON.parse(catItm.CustomData)
         var stats = catCustData.Stats || {};
         var bItemUpdated = false;
