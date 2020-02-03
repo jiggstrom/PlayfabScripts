@@ -102,7 +102,7 @@ handlers.storeMatchResult = function (args) {
 }
 
 handlers.redeemReward = function (args) {
-  return completedRewards(args);
+  return redeemReward(args);
 }
 
 function getCatalogItem(itemId) {
