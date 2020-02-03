@@ -101,6 +101,10 @@ handlers.storeMatchResult = function (args) {
   }
 }
 
+handlers.redeemReward = function (args) {
+  return completedRewards(args);
+}
+
 function getCatalogItem(itemId) {
   var catalogData = server.GetCatalogItems({CatalogVersion: null});
   for(var item in catalogData.Catalog)
@@ -221,11 +225,11 @@ function reduceCurrencyIfPossible (args) {
 function storeMatchResult(args) 
 {
   if(args.points1 > args.points2){
-    //grantMatchRewardWin();
+    grantMatchRewardWin();
     updateStats(args.stats,1);    
   }
   else {
-    //grantMatchReward();
+    grantMatchReward();
     updateStats(args.stats,0);
   }
   addToActiveMissions(args);
@@ -330,6 +334,52 @@ function addToActiveMissions(matchData){
     }
   };
 }
+
+function redeemReward(itemInstanceId){
+  var catalogitems = [];
+
+  var rewardItemInInventory = getInventoryItemInstance(itemInstanceId)
+
+  if(rewardItemsInInventory != undefined) {
+    var item = rewardItemsInInventory;
+    log.debug("found item of type " + item.ItemId + " in inventory");
+      var catItm = getCatalogItem(item.ItemId);
+
+      if(catItm != undefined){
+      log.debug("found catalog item of type " + catItm.ItemId + " in catalog");
+      var catCustData = JSON.parse(catItm.CustomData)
+      var stats = catCustData.Stats || {};
+      if(item.CustomData == undefined){
+        item.CustomData = {};
+      }
+
+      for(statIx in stats){
+        var stat = stats[0];
+        log.debug("found stat item of type " + stat.Type + " on catalog item");
+        if(item.CustomData[stat.Name] != undefined){
+          var lvl = parseInt(item.CustomData[stat.Name]);
+          if(lvl < parseInt(stat.Value)){
+            return {Status:"Incomplete", Reward:""};
+          }            
+        }
+        else {
+          return {Status:"Incomplete", Reward:""};
+        }
+      }
+      if(catCustData.Reward.Type == "PC" || catCustData.Reward.Type == "BK")
+      var subtractUserVirtualCurrencyRequest = {
+        PlayFabId: currentPlayerId,
+        VirtualCurrency: catCustData.Reward.Type,
+        Amount: catCustData.Reward.Amount
+      };
+        
+      log.debug(server.SubtractUserVirtualCurrency(subtractUserVirtualCurrencyRequest));      
+
+      return {Status:"Completed", Reward:catCustData.Reward};   
+    }
+  }
+}
+
 
 function getInventoryItemInstancesFromItemClass(ItemClass) {
   var inventoryData = server.GetUserInventory({PlayFabId: currentPlayerId});
