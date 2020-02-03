@@ -365,14 +365,16 @@ function redeemReward(itemInstanceId){
           return {Status:"Incomplete", Reward:""};
         }
       }
-      if(catCustData.Reward.Type == "PC" || catCustData.Reward.Type == "BK")
-      var addUserVirtualCurrencyRequest = {
-        PlayFabId: currentPlayerId,
-        VirtualCurrency: catCustData.Reward.Type,
-        Amount: parseInt(catCustData.Reward.Amount)
-      };
-        
-      log.debug(server.AddUserVirtualCurrency(addUserVirtualCurrencyRequest));      
+      
+      if(catCustData.Reward.Type == "PC" || catCustData.Reward.Type == "BK") {
+        var addUserVirtualCurrencyRequest = {
+          PlayFabId: currentPlayerId,
+          VirtualCurrency: catCustData.Reward.Type,
+          Amount: parseInt(catCustData.Reward.Amount)
+        };
+          
+        log.debug(server.AddUserVirtualCurrency(addUserVirtualCurrencyRequest));      
+      }
 
       return {Status:"Completed", Reward:catCustData.Reward};   
     }
