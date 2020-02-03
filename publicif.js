@@ -292,6 +292,7 @@ function addToActiveMissions(matchData){
               if (object.hasOwnProperty(prop)) {
                 const element = object[prop];
                 if(prop == stat.Name) {
+                  log.debug("found " + prop + " with a value of " + element);
                   if(item.CustomData[prop] != null) {
                     item.customData[prop] += parseInt(element)
                     bItemUpdated = true;
@@ -307,9 +308,10 @@ function addToActiveMissions(matchData){
         }
 
         if(bItemUpdated) {
+          log.debug("storing item " + item.ItemId);
           var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
               PlayFabId: currentPlayerId,
-              ItemInstanceId: Item.ItemInstanceId,
+              ItemInstanceId: item.ItemInstanceId,
               Data: item.customData
           });
         }      
@@ -323,7 +325,6 @@ function getInventoryItemInstancesFromItemClass(ItemClass) {
 
   for(var item in inventoryData.Inventory)
   {
-    log.debug("found " + inventoryData.Inventory[item].ItemId);
     if(inventoryData.Inventory[item].ItemClass == ItemClass) return inventoryData.Inventory[item];
   }
 }
