@@ -369,7 +369,7 @@ function redeemReward(itemInstanceId){
 
       for(rewardIx in catCustData.Reward) {
         var reward = catCustData.Reward[rewardIx];
-        if(reward == "PC" || reward == "BK") {
+        if(reward.Type == "PC" || reward.Type == "BK") {
           var addUserVirtualCurrencyRequest = {
             PlayFabId: currentPlayerId,
             VirtualCurrency: reward.Type,
