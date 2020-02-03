@@ -366,13 +366,13 @@ function redeemReward(itemInstanceId){
         }
       }
       if(catCustData.Reward.Type == "PC" || catCustData.Reward.Type == "BK")
-      var subtractUserVirtualCurrencyRequest = {
+      var addUserVirtualCurrencyRequest = {
         PlayFabId: currentPlayerId,
         VirtualCurrency: catCustData.Reward.Type,
         Amount: catCustData.Reward.Amount
       };
         
-      log.debug(server.SubtractUserVirtualCurrency(subtractUserVirtualCurrencyRequest));      
+      log.debug(server.AddUserVirtualCurrency(addUserVirtualCurrencyRequest));      
 
       return {Status:"Completed", Reward:catCustData.Reward};   
     }
