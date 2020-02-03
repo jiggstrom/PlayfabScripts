@@ -369,7 +369,7 @@ function redeemReward(itemInstanceId){
       var addUserVirtualCurrencyRequest = {
         PlayFabId: currentPlayerId,
         VirtualCurrency: catCustData.Reward.Type,
-        Amount: catCustData.Reward.Amount
+        Amount: parseInt(catCustData.Reward.Amount)
       };
         
       log.debug(server.AddUserVirtualCurrency(addUserVirtualCurrencyRequest));      
