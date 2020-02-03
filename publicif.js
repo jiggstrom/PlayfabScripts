@@ -275,40 +275,42 @@ function addToActiveMissions(matchData){
   var rewardItemsInInventory = getInventoryItemInstancesFromItemClass("RewardMission");
 
   if(rewardItemsInInventory != undefined) for(item in rewardItemsInInventory) {
-    var catItm = catalogitems.find(x=> x.ItemId ==  item.ItemId);
-    if(catItm == null){
-      catItm = getCatalogItem(item.ItemId);
-      catalogitems.push(catItm);
-    }
-    if(catItm != null){
-      var catCustData = JSON.parse(catItm.CustomData)
-      var stats = catCustData.Stats || {};
-      var bItemUpdated = false;
-      for(stat in stats){
-        if(stat.Type == "Stat") {
-          for (const prop in matchData.Statistics) {
-            if (object.hasOwnProperty(prop)) {
-              const element = object[prop];
-              if(prop == stat.Name) {
-                if(item.CustomData[prop] != null) {
-                  item.customData[prop] += parseInt(element)
-                }
-                else {
-                  item.customData[prop] = parseInt(element)
-                }
-              }             
+    if(item != undefined) {
+      var catItm = catalogitems.find(x=> x.ItemId ==  item.ItemId);
+      if(catItm == null){
+        catItm = getCatalogItem(item.ItemId);
+        catalogitems.push(catItm);
+      }
+      if(catItm != null){
+        var catCustData = JSON.parse(catItm.CustomData)
+        var stats = catCustData.Stats || {};
+        var bItemUpdated = false;
+        for(stat in stats){
+          if(stat.Type == "Stat") {
+            for (const prop in matchData.Statistics) {
+              if (object.hasOwnProperty(prop)) {
+                const element = object[prop];
+                if(prop == stat.Name) {
+                  if(item.CustomData[prop] != null) {
+                    item.customData[prop] += parseInt(element)
+                  }
+                  else {
+                    item.customData[prop] = parseInt(element)
+                  }
+                }             
+              }
             }
           }
         }
-      }
 
-      if(bItemUpdated) {
-        var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
-            PlayFabId: currentPlayerId,
-            ItemInstanceId: Item.ItemInstanceId,
-            Data: item.customData
-        });
-      }      
+        if(bItemUpdated) {
+          var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
+              PlayFabId: currentPlayerId,
+              ItemInstanceId: Item.ItemInstanceId,
+              Data: item.customData
+          });
+        }      
+      }
     }
   };
 }
