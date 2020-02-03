@@ -221,11 +221,11 @@ function reduceCurrencyIfPossible (args) {
 function storeMatchResult(args) 
 {
   if(args.points1 > args.points2){
-    grantMatchRewardWin();
+    //grantMatchRewardWin();
     updateStats(args.stats,1);    
   }
   else {
-    grantMatchReward();
+    //grantMatchReward();
     updateStats(args.stats,0);
   }
   addToActiveMissions(args);
@@ -276,6 +276,7 @@ function addToActiveMissions(matchData){
 
   if(rewardItemsInInventory != undefined) for(item in rewardItemsInInventory) {
     if(item != undefined) {
+      log.debug("found item of type " + item.ItemId + " in inventory");
       var catItm = catalogitems.find(x=> x.ItemId ==  item.ItemId);
       if(catItm == undefined){
         catItm = getCatalogItem(item.ItemId);
@@ -283,12 +284,15 @@ function addToActiveMissions(matchData){
           catalogitems.push(catItm);
       }
       if(catItm != undefined){
+        log.debug("found catalog item of type " + catItm.ItemId + " in catalog");
         var catCustData = JSON.parse(catItm.CustomData)
         var stats = catCustData.Stats || {};
         var bItemUpdated = false;
         for(stat in stats){
+          log.debug("found stat item of type " + stat.Type + " on catalog item");
           if(stat.Type == "Stat") {
             for (const prop in matchData.Statistics) {
+              log.debug("found statistic of type " + prop + " on stat item");
               if (object.hasOwnProperty(prop)) {
                 const element = object[prop];
                 if(prop == stat.Name) {
