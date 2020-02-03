@@ -279,7 +279,7 @@ function addToActiveMissions(matchData){
       var catItm = catalogitems.find(x=> x.ItemId ==  item.ItemId);
       if(catItm == undefined){
         catItm = getCatalogItem(item.ItemId);
-        if(cetItm != undefined)
+        if(catItm != undefined)
           catalogitems.push(catItm);
       }
       if(catItm != undefined){
