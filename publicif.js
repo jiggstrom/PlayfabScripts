@@ -272,7 +272,9 @@ function updateStats(stats, won)
 function addToActiveMissions(matchData){
   var catalogitems = [];
 
-  for(item in getInventoryItemInstancesFromItemClass("RewardMission")) {
+  var rewardItemsInInventory = getInventoryItemInstancesFromItemClass("RewardMission");
+
+  if(rewardItemsInInventory != undefined) for(item in rewardItemsInInventory) {
     var catItm = catalogitems.find(x=> x.ItemId ==  item.ItemId);
     if(catItm == null){
       catItm = getCatalogItem(item.ItemId);
