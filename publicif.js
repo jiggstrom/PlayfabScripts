@@ -294,7 +294,7 @@ function addToActiveMissions(matchData){
           var stat = stats[0];
           log.debug("found stat item of type " + stat.Type + " on catalog item");
           if(stat.Type == "Stat") {
-            for (const prop in matchData.Statistics) {
+            for (const prop in matchData.stats) {
               log.debug("found statistic of type " + prop + " on stat item");
               if (object.hasOwnProperty(prop)) {
                 const element = object[prop];
