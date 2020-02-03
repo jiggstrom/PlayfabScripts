@@ -272,7 +272,7 @@ function updateStats(stats, won)
 function addToActiveMissions(matchData){
   var catalogitems = [];
 
-  getInventoryItemInstancesFromItemClass("RewardMission").forEach(item => {
+  for(item in getInventoryItemInstancesFromItemClass("RewardMission")) {
     var catItm = catalogitems.find(x=> x.ItemId ==  item.ItemId);
     if(catItm == null){
       catItm = getCatalogItem(item.ItemId);
@@ -282,7 +282,7 @@ function addToActiveMissions(matchData){
       var catCustData = JSON.parse(catItm.CustomData)
       var stats = catCustData.Stats || {};
       var bItemUpdated = false;
-      stats.forEach(stat => {
+      for(stat in stats){
         if(stat.Type == "Stat") {
           for (const prop in matchData.Statistics) {
             if (object.hasOwnProperty(prop)) {
@@ -298,7 +298,8 @@ function addToActiveMissions(matchData){
             }
           }
         }
-      });
+      }
+
       if(bItemUpdated) {
         var updateUserDataResult = server.UpdateUserInventoryItemCustomData({
             PlayFabId: currentPlayerId,
@@ -307,7 +308,7 @@ function addToActiveMissions(matchData){
         });
       }      
     }
-  });
+  };
 }
 
 function getInventoryItemInstancesFromItemClass(ItemClass) {
