@@ -338,10 +338,9 @@ function addToActiveMissions(matchData){
 function redeemReward(itemInstanceId){
   var catalogitems = [];
 
-  var rewardItemInInventory = getInventoryItemInstance(itemInstanceId)
+  var item = getInventoryItemInstance(itemInstanceId)
 
-  if(rewardItemsInInventory != undefined) {
-    var item = rewardItemsInInventory;
+  if(item != undefined) {
     log.debug("found item of type " + item.ItemId + " in inventory");
       var catItm = getCatalogItem(item.ItemId);
 
