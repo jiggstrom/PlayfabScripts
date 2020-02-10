@@ -366,7 +366,6 @@ function redeemReward(itemInstanceId){
         }
       }
 
-
       for(rewardIx in catCustData.Reward) {
         var reward = catCustData.Reward[rewardIx];
         if(reward.Type == "PC" || reward.Type == "BK") {
@@ -379,6 +378,13 @@ function redeemReward(itemInstanceId){
           log.debug(server.AddUserVirtualCurrency(addUserVirtualCurrencyRequest));      
         }
       }
+
+      var updateUserDataResult = server.ConsumeItem({
+        PlayFabId: currentPlayerId,
+        ItemInstanceId: item.ItemInstanceId,
+        ConsumeCount: 1
+    });
+
       return {Status:"Completed", Reward:catCustData.Reward};   
     }
   }
