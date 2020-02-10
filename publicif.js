@@ -379,10 +379,9 @@ function redeemReward(itemInstanceId){
         }
       }
 
-      var updateUserDataResult = server.ConsumeItem({
+      var updateUserDataResult = server.RevokeInventoryItem({
         PlayFabId: currentPlayerId,
-        ItemInstanceId: item.ItemInstanceId,
-        ConsumeCount: 1
+        ItemInstanceId: item.ItemInstanceId
     });
 
       return {Status:"Completed", Reward:catCustData.Reward};   
