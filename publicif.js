@@ -276,7 +276,7 @@ function updateStats(stats, won)
 function addToActiveMissions(matchData){
   var catalogitems = [];
 
-  var rewardItemsInInventory = getInventoryItemInstancesFromItemClass("RewardMission");
+  var rewardItemsInInventory = getRewardItemInstances();
 
   if(rewardItemsInInventory != undefined) for(ix in rewardItemsInInventory) {
     var item = rewardItemsInInventory[ix];
@@ -390,7 +390,7 @@ function redeemReward(itemInstanceId){
 }
 
 
-function getInventoryItemInstancesFromItemClass(ItemClass) {
+function getRewardItemInstances() {
   var inventoryData = server.GetUserInventory({PlayFabId: currentPlayerId});
-  return inventoryData.Inventory.filter(x => x.ItemClass == ItemClass)
+  return inventoryData.Inventory.filter(x => x.ItemClass == "DailyMission" || x.ItemClass == "RewardMission" )
 }
