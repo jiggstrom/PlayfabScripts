@@ -224,16 +224,18 @@ function reduceCurrencyIfPossible (args) {
 
 function storeMatchResult(args) 
 {
+  var granted;
+
   if(args.points1 > args.points2){
-    grantMatchRewardWin();
+    granted = grantMatchRewardWin();
     updateStats(args.stats,1);    
   }
   else {
-    grantMatchReward();
+    granted = grantMatchReward();
     updateStats(args.stats,0);
   }
   addToActiveMissions(args);
-  
+  return granted;
 }
 
 function grantMatchRewardWin(){
@@ -242,7 +244,7 @@ function grantMatchRewardWin(){
     ItemIds: ["WIN_BUNDLE"]
   };
     
-  log.debug(server.GrantItemsToUser(grantItemsToUserRequest));      
+  return server.GrantItemsToUser(grantItemsToUserRequest);      
 
 }
 
@@ -252,7 +254,7 @@ function grantMatchReward(){
     ItemIds: ["LOSS_BUNDLE"]
   };
     
-  log.debug(server.GrantItemsToUser(grantItemsToUserRequest)); 
+  return server.GrantItemsToUser(grantItemsToUserRequest); 
 }
 
 function updateStats(stats, won)
